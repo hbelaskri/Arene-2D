@@ -1,38 +1,39 @@
-#include "StateMachine/NPC.h"
 #include <SFML/Graphics.hpp>
-int main()
+#include "Player.h"
+#include "Background.h"
+
+int main() 
 {
-    //Npc npc;
-
-    //npc.Init();
-
-    //while (true)
-    //{
-    //    npc.Update();
-    //}
-
-    sf::RenderWindow window(sf::VideoMode({ 200, 200 }), "SFML works!");
-    sf::CircleShape shape(100.f);
-    shape.setFillColor(sf::Color::Green);
-
-    while (window.isOpen())
+    Background background;
+    if (!background.load("../Assets/pacmanPack/Background.png"))
     {
-        while (const std::optional event = window.pollEvent())
-        {
-            if (event->is<sf::Event::Closed>())
-                window.close();
+        return -1; 
+    }
+
+    sf::RenderWindow window(sf::VideoMode({ 800, 600 }), "PacMan Solo");
+    window.setFramerateLimit(60);
+
+    Player player;
+
+    sf::Clock clock;
+
+    while (window.isOpen()) 
+    {
+        window.clear(sf::Color::Black);
+
+        background.draw(window); 
+        player.draw(window);     
+
+        float deltaTime = clock.restart().asSeconds();
+
+        while (const std::optional event = window.pollEvent()) {
+            if (event->is<sf::Event::Closed>()) window.close();
         }
 
-        window.clear();
-        window.draw(shape);
+        player.update(deltaTime);
+        player.draw(window);
         window.display();
     }
+
+    return 0;
 }
-
-
-/*
-Template
-FSM
-fichiers inl
-
-*/
