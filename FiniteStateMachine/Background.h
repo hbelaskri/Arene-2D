@@ -1,17 +1,23 @@
 #pragma once
 #include <SFML/Graphics.hpp>
-#include <string>
+#include <vector>
 
-class Background
-{
+struct Decoration {
+    sf::IntRect textureRect;
+    sf::Vector2f position;
+    sf::Vector2f sizeInTiles; 
+};
+
+class Background {
 public:
-
     Background();
-
-    bool load(const std::string& texturepath);
-    void draw(sf::RenderWindow& Window) const;
+    bool load(const std::string& texturePath);
+    void draw(sf::RenderWindow& window) const;
+    bool isWall(int gridX, int gridY) const;
 
 private:
     sf::Texture texture;
-    sf::Sprite sprite;
+    mutable sf::Sprite tileSprite;
+    std::vector<Decoration> formes;
+    int map[15][20];
 };

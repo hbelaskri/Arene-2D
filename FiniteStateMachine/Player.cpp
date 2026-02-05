@@ -3,7 +3,7 @@
 #include <cmath>
 
 Player::Player()
-    : sprite(texture), speed(300.f), currentFrame(0), frameTime(0.f), animationSpeed(0.1f)
+    : sprite(texture), speed(100.f), currentFrame(0), frameTime(0.f), animationSpeed(0.1f)
 {
     if (!texture.loadFromFile("../Assets/pacmanPack/PacMan.png")) 
     {
@@ -21,50 +21,54 @@ Player::Player()
     sprite.setPosition({ 400.f, 300.f });
 
 
-    sprite.setScale({ 1.5f, 1.5f });
+    sprite.setScale({ 1.f, 1.f });
 }
 
 void Player::update(float deltaTime)
 {
     sf::Vector2f movement(0.f, 0.f);
-    bool isMoving = false;
 
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Z)) movement.y -= 1.f;
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S)) movement.y += 1.f;
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Q)) { movement.x -= 1.f; sprite.setScale({ -1.5f, 1.5f }); } 
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D)) { movement.x += 1.f; sprite.setScale({ 1.5f, 1.5f }); }  
-
-    if (movement.x != 0.f || movement.y != 0.f) 
-    {
-        isMoving = true;
-        float length = std::sqrt(movement.x * movement.x + movement.y * movement.y);
-        sprite.move((movement / length) * speed * deltaTime);
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Z)) {
+        movement.y -= 1.f;
+        sprite.setRotation(sf::degrees(270.f)); 
+        sprite.setScale({ 1.f, 1.f });         
+    }
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S)) {
+        movement.y += 1.f;
+        sprite.setRotation(sf::degrees(90.f));  
+        sprite.setScale({ 1.f, 1.f });
+    }
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Q)) {
+        movement.x -= 1.f;
+        sprite.setRotation(sf::degrees(0.f));   
+        sprite.setScale({ -1.f, 1.f });        
+    }
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D)) {
+        movement.x += 1.f;
+        sprite.setRotation(sf::degrees(0.f));  
+        sprite.setScale({ 1.f, 1.f });        
     }
 
-
-    if (isMoving) 
+    if (movement.x != 0.f || movement.y != 0.f)
     {
+        float length = std::sqrt(movement.x * movement.x + movement.y * movement.y);
+        sprite.move((movement / length) * speed * deltaTime);
+
+ 
         frameTime += deltaTime;
-        if (frameTime >= animationSpeed) 
+        if (frameTime >= animationSpeed)
         {
             frameTime = 0.f;
             currentFrame = (currentFrame + 1) % 8;
-
-        
-            sprite.setTextureRect(sf::IntRect(
-                { currentFrame * frameSize.x, 0 },
-                { frameSize.x, frameSize.y }
-            ));
+            sprite.setTextureRect(sf::IntRect({ currentFrame * frameSize.x, 0 }, { frameSize.x, frameSize.y }));
         }
     }
-    else 
+    else
     {
-      
         currentFrame = 0;
         sprite.setTextureRect(sf::IntRect({ 0, 0 }, { frameSize.x, frameSize.y }));
     }
 }
-
 void Player::draw(sf::RenderWindow& window)
 {
     window.draw(sprite);

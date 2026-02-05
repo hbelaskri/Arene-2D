@@ -10,7 +10,7 @@ int main()
         return -1; 
     }
 
-    sf::RenderWindow window(sf::VideoMode({ 800, 600 }), "PacMan Solo");
+    sf::RenderWindow window(sf::VideoMode({ 800, 600 }), "PacMan ");
     window.setFramerateLimit(60);
 
     Player player;
