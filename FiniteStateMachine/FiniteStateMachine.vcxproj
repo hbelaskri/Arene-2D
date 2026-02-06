@@ -136,12 +136,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Background.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Map.cpp" />
     <ClCompile Include="Player.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Background.h" />
     <ClInclude Include="NpcStates\ChaseState.h" />
     <ClInclude Include="NpcStates\Conditions.h" />
     <ClInclude Include="NpcStates\NpcContext.h" />
