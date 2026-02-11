@@ -3,6 +3,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <cstdint>
 
 class EndScreen
 {
@@ -28,5 +29,6 @@ private:
 
     sf::Texture m_ghostTexture;
     std::vector<sf::Sprite> m_visualGhosts;
-    std::vector<sf::Vector2f> m_ghostDirections; 
+    std::vector<sf::Vector2f> m_ghostDirections;
+    std::vector<sf::CircleShape> m_stars; 
 };

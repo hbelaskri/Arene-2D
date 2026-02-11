@@ -6,7 +6,7 @@ MenuManager::MenuManager(sf::RenderWindow& window)
     m_mainMenu(window),
     m_optionsMenu(window),
     m_endScreen(window),
-    m_pauseText(m_font) 
+    m_pauseText(m_font)
 {
     if (!m_font.openFromFile("../Assets/PressStart2P.ttf")) {
         std::cerr << "Erreur : police non chargee dans MenuManager\n";
