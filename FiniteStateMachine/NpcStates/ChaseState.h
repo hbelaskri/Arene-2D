@@ -10,7 +10,7 @@ public:
     virtual void SetTargetToRandom() = 0;
     virtual void SetSpeed(float speed) = 0;
     virtual void ReverseDirection() = 0; 
-    virtual sf::Vector2i GetGridPosition() const = 0; // Ajout de la méthode manquante
+    virtual sf::Vector2i GetGridPosition() const = 0;
 };
 
 namespace GhostAi

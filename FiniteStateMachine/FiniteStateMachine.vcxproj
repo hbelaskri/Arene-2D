@@ -136,28 +136,33 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Background.cpp" />
-    <ClCompile Include="EndScreen.cpp" />
+    <ClCompile Include="Game\Background.cpp" />
+    <ClCompile Include="Game\Collectibles.cpp" />
+    <ClCompile Include="Game\Game.cpp" />
+    <ClCompile Include="Game\Navigation.cpp" />
+    <ClCompile Include="Game\Player.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="MainMenu.cpp" />
-    <ClCompile Include="Navigation.cpp" />
-    <ClCompile Include="OptionsMenu.cpp" />
-    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Menu\EndScreen.cpp" />
+    <ClCompile Include="Menu\MainMenu.cpp" />
+    <ClCompile Include="Menu\MenuManager.cpp" />
+    <ClCompile Include="Menu\OptionsMenu.cpp" />
     <ClCompile Include="StateMachine\NPC.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Background.h" />
-    <ClInclude Include="Collectibles.h" />
-    <ClInclude Include="Directions.h" />
-    <ClInclude Include="EndScreen.h" />
-    <ClInclude Include="MainMenu.h" />
-    <ClInclude Include="Navigation.h" />
+    <ClInclude Include="Game\Background.h" />
+    <ClInclude Include="Game\Collectibles.h" />
+    <ClInclude Include="Game\Directions.h" />
+    <ClInclude Include="Game\Game.h" />
+    <ClInclude Include="Game\Navigation.h" />
+    <ClInclude Include="Game\Player.h" />
+    <ClInclude Include="Menu\EndScreen.h" />
+    <ClInclude Include="Menu\MainMenu.h" />
+    <ClInclude Include="Menu\MenuManager.h" />
+    <ClInclude Include="Menu\OptionsMenu.h" />
     <ClInclude Include="NpcStates\ChaseState.h" />
     <ClInclude Include="NpcStates\Conditions.h" />
     <ClInclude Include="NpcStates\NpcContext.h" />
     <ClInclude Include="NpcStates\PatrolState.h" />
-    <ClInclude Include="OptionsMenu.h" />
-    <ClInclude Include="Player.h" />
     <ClInclude Include="StateMachine\NPC.h" />
     <ClInclude Include="StateMachine\State.h" />
     <ClInclude Include="StateMachine\StateMachine.h" />

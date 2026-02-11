@@ -4,9 +4,8 @@
 #include "StateMachine/StateMachine.h"
 #include "NpcStates/NpcContext.h"
 #include "NpcStates/ChaseState.h" 
-#include "Directions.h"
+#include "Game/Directions.h"
 
-// Forward declaration 
 class Player;
 class Background;
 
@@ -18,7 +17,6 @@ private:
     sf::Texture texture;
     sf::Sprite sprite;
 
-    // Animation 
     int currentFrame;
     float frameTime;
     float animationSpeed;
@@ -26,9 +24,8 @@ private:
     sf::Color baseColor;
 
     float speed = 100.f;
-    sf::Vector2i startGridPosition; // Sauvegarde pour le respawn
+    sf::Vector2i startGridPosition; 
 
-    // Références pour l'IA
     Player* targetPlayer = nullptr;
     Npc* blinkyReference = nullptr;
 
@@ -39,12 +36,11 @@ public:
     Npc();
 
     void Init(int id, sf::Vector2i startGridPos, Player* player, Npc* blinky = nullptr);
-    void Respawn(); // Nouvelle méthode pour gérer la mort sans fuite mémoire
+    void Respawn(); 
 
     void Update(float dt, GlobalGhostMode currentMode, const Background& bg);
     void Draw(sf::RenderWindow& window);
 
-    // --- Implémentation IGhostEntity ---
     void SetTargetToPlayer() override;
     void SetTargetToCorner() override;
     void SetTargetToRandom() override;

@@ -1,7 +1,7 @@
 #include "NPC.h"
-#include "Player.h"     
-#include "Background.h"
-#include "Navigation.h"
+#include "Game/Player.h"     
+#include "Game/Background.h"
+#include "Game/Navigation.h"
 #include "NpcStates/Conditions.h"
 #include "NpcStates/ChaseState.h" 
 #include <iostream>
@@ -104,7 +104,7 @@ void Npc::Update(float dt, GlobalGhostMode currentMode, const Background& bg)
 
     if (distToCenter < 1.0f)
     {
-        sprite.setPosition(centerOfTile); // Snap to grid
+        sprite.setPosition(centerOfTile); 
 
         context.currentDirection = Navigation::GetNextGhostDirection(
             currentGridPos,

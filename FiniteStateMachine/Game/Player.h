@@ -1,7 +1,6 @@
-// Player.h
 #pragma once
 #include <SFML/Graphics.hpp>
-#include "Directions.h" // Assurez-vous d'inclure ceci
+#include "Directions.h" 
 
 class Background;
 
@@ -15,7 +14,6 @@ private:
     float animationSpeed;
     sf::Vector2i frameSize;
 
-    // Nouvelle variable pour l'IA des fantômes
     Direction currentDirection;
 
 public:
@@ -29,9 +27,7 @@ public:
         return sprite.getGlobalBounds();
     }
 
-    // Getters nécessaires pour l'IA
     Direction getDirection() const { return currentDirection; }
 
-    // Helper pour avoir la position grille directement
     sf::Vector2i getGridPosition() const;
 };

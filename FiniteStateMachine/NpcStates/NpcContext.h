@@ -1,6 +1,6 @@
 #pragma once
 #include <SFML/System/Vector2.hpp>
-#include "../Directions.h"
+#include "Game/Directions.h"
 
 class IGhostEntity;
 
