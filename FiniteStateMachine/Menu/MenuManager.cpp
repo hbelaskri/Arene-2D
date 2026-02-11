@@ -1,11 +1,24 @@
 #include "MenuManager.h"
+#include <iostream>
 
 MenuManager::MenuManager(sf::RenderWindow& window)
-    : m_window(window), 
-      m_mainMenu(window), 
-      m_optionsMenu(window), 
-      m_endScreen(window)
+    : m_window(window),
+    m_mainMenu(window),
+    m_optionsMenu(window),
+    m_endScreen(window),
+    m_pauseText(m_font) 
 {
+    if (!m_font.openFromFile("../Assets/PressStart2P.ttf")) {
+        std::cerr << "Erreur : police non chargee dans MenuManager\n";
+    }
+
+    m_pauseText.setString("PAUSE");
+    m_pauseText.setCharacterSize(50);
+    m_pauseText.setFillColor(sf::Color::Yellow);
+
+    sf::FloatRect bounds = m_pauseText.getLocalBounds();
+    m_pauseText.setOrigin({ bounds.size.x / 2.0f, bounds.size.y / 2.0f });
+    m_pauseText.setPosition({ window.getSize().x / 2.0f, window.getSize().y / 2.0f });
 }
 
 bool MenuManager::handleEvent(const std::optional<sf::Event>& event, GameState& currentState, sf::RenderWindow& window) {
@@ -72,6 +85,9 @@ void MenuManager::draw(GameState currentState) {
         break;
     case GameState::End:
         m_endScreen.draw();
+        break;
+    case GameState::Pause:
+        m_window.draw(m_pauseText);
         break;
     default:
         break;

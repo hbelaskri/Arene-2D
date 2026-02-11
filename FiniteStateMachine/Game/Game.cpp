@@ -42,6 +42,17 @@ void Game::processEvents() {
             m_window.close();
         }
 
+        if (const auto* keyEvent = event->getIf<sf::Event::KeyPressed>()) {
+            if (keyEvent->code == sf::Keyboard::Key::Escape) {
+                if (m_currentState == GameState::Game) {
+                    m_currentState = GameState::Pause; 
+                }
+                else if (m_currentState == GameState::Pause) {
+                    m_currentState = GameState::Game;  
+                }
+            }
+        }
+
         if (m_menuManager.handleEvent(event, m_currentState, m_window)) {
             resetGame();
         }
@@ -64,6 +75,10 @@ void Game::resetGame() {
 }
 
 void Game::update(float deltaTime) {
+    if (m_currentState == GameState::Pause) {
+        return; 
+    }
+
     if (m_currentState != GameState::Game) {
         m_menuManager.update(m_currentState);
         return;
@@ -133,7 +148,7 @@ void Game::update(float deltaTime) {
 void Game::render() {
     m_window.clear(sf::Color::Black);
 
-    if (m_currentState == GameState::Game) {
+    if (m_currentState == GameState::Game || m_currentState == GameState::Pause) {
         m_background.draw(m_window);
         m_collectibles.draw(m_window);
         m_player->draw(m_window);
@@ -141,7 +156,8 @@ void Game::render() {
             ghost->Draw(m_window);
         }
     }
-    else {
+
+    if (m_currentState != GameState::Game) {
         m_menuManager.draw(m_currentState);
     }
 

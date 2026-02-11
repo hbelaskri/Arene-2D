@@ -9,6 +9,7 @@ enum class GameState {
     Menu,
     Options,
     Game,
+    Pause, 
     End
 };
 
@@ -17,7 +18,7 @@ public:
     explicit MenuManager(sf::RenderWindow& window);
 
     bool handleEvent(const std::optional<sf::Event>& event, GameState& currentState, sf::RenderWindow& window);
-    
+
     void update(GameState currentState);
     void draw(GameState currentState);
 
@@ -28,4 +29,7 @@ private:
     MainMenu m_mainMenu;
     OptionsMenu m_optionsMenu;
     EndScreen m_endScreen;
+
+    sf::Font m_font;
+    sf::Text m_pauseText;
 };
