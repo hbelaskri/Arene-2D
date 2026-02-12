@@ -39,38 +39,69 @@ sf::Vector2i Player::getGridPosition() const {
 void Player::update(float deltaTime, const Background& background)
 {
     sf::Vector2f movement(0.f, 0.f);
-    float currentScaleVal = std::abs(sprite.getScale().x);
+    Direction newDir = Direction::None;
 
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Z)) {
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Z)) newDir = Direction::Up;
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S)) newDir = Direction::Down;
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Q)) newDir = Direction::Left;
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D)) newDir = Direction::Right;
+
+    if (newDir != Direction::None) {
+
+        sf::Vector2i gridPos = Navigation::WorldToGrid(sprite.getPosition());
+        sf::Vector2f centerPos = Navigation::GridToWorld(gridPos);
+
+        float tolerance = 10.0f;
+
+        bool isPerpendicular = (currentDirection == Direction::Left || currentDirection == Direction::Right)
+            ? (newDir == Direction::Up || newDir == Direction::Down)
+            : (newDir == Direction::Left || newDir == Direction::Right);
+
+        if (isPerpendicular) {
+            float distX = std::abs(sprite.getPosition().x - centerPos.x);
+            float distY = std::abs(sprite.getPosition().y - centerPos.y);
+
+            if ((newDir == Direction::Up || newDir == Direction::Down) && distX < tolerance) {
+                sprite.setPosition({ centerPos.x, sprite.getPosition().y });
+                currentDirection = newDir;
+            }
+            else if ((newDir == Direction::Left || newDir == Direction::Right) && distY < tolerance) {
+                sprite.setPosition({ sprite.getPosition().x, centerPos.y });
+                currentDirection = newDir;
+            }
+        }
+        else {
+            currentDirection = newDir;
+        }
+    }
+
+    if (currentDirection == Direction::Up) {
         movement.y -= 1.f;
-        currentDirection = Direction::Up;
         sprite.setRotation(sf::degrees(270.f));
+        sprite.setScale({ std::abs(sprite.getScale().x), std::abs(sprite.getScale().y) });
     }
-    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S)) {
+    else if (currentDirection == Direction::Down) {
         movement.y += 1.f;
-        currentDirection = Direction::Down;
         sprite.setRotation(sf::degrees(90.f));
+        sprite.setScale({ std::abs(sprite.getScale().x), std::abs(sprite.getScale().y) });
     }
-    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Q)) {
+    else if (currentDirection == Direction::Left) {
         movement.x -= 1.f;
-        currentDirection = Direction::Left;
-        sprite.setScale(sf::Vector2f(-currentScaleVal, currentScaleVal)); 
         sprite.setRotation(sf::degrees(0.f));
+        sprite.setScale({ -std::abs(sprite.getScale().x), std::abs(sprite.getScale().y) });
     }
-    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D)) {
+    else if (currentDirection == Direction::Right) {
         movement.x += 1.f;
-        currentDirection = Direction::Right;
-        sprite.setScale(sf::Vector2f(currentScaleVal, currentScaleVal));
         sprite.setRotation(sf::degrees(0.f));
+        sprite.setScale({ std::abs(sprite.getScale().x), std::abs(sprite.getScale().y) });
     }
 
     if (movement.x != 0.f || movement.y != 0.f)
     {
-        float length = std::sqrt(movement.x * movement.x + movement.y * movement.y);
-        sf::Vector2f directionVec = (movement / length) * speed * deltaTime;
-
+        sf::Vector2f directionVec = movement * speed * deltaTime;
         sf::Vector2f nextPos = sprite.getPosition() + directionVec;
-        float offset = (Background::TILE_SIZE * 0.70f) / 2.0f;
+
+        float offset = (Background::TILE_SIZE * 0.45f) / 2.0f;
 
         bool canMove = !background.isWall(nextPos.x + offset, nextPos.y + offset) &&
             !background.isWall(nextPos.x - offset, nextPos.y + offset) &&
@@ -80,20 +111,15 @@ void Player::update(float deltaTime, const Background& background)
         if (canMove)
         {
             sprite.setPosition(nextPos);
-        }
 
-        frameTime += deltaTime;
-        if (frameTime >= animationSpeed)
-        {
-            frameTime = 0.f;
-            currentFrame = (currentFrame + 1) % 8; 
-            sprite.setTextureRect(sf::IntRect(sf::Vector2i(currentFrame * frameSize.x, 0), sf::Vector2i(frameSize.x, frameSize.y)));
+            frameTime += deltaTime;
+            if (frameTime >= animationSpeed)
+            {
+                frameTime = 0.f;
+                currentFrame = (currentFrame + 1) % 8;
+                sprite.setTextureRect(sf::IntRect({ currentFrame * frameSize.x, 0 }, { frameSize.x, frameSize.y }));
+            }
         }
-    }
-    else
-    {
-        currentFrame = 0;
-        sprite.setTextureRect(sf::IntRect(sf::Vector2i(0, 0), sf::Vector2i(frameSize.x, frameSize.y)));
     }
 }
 
