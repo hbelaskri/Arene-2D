@@ -1,6 +1,8 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <iostream>
+#include <vector>
+#include <cstdint>
 
 class OptionsMenu
 {
@@ -21,4 +23,14 @@ private:
     sf::Text m_backButton;
 
     bool m_soundEnabled = true;
+
+    sf::Texture m_pacmanTexture;
+    sf::Sprite m_pacmanSprite;
+    sf::Texture m_coinTexture;
+    sf::Vector2i m_pacmanFrameSize;
+
+    std::vector<sf::Sprite> m_pelletSprites;
+    std::vector<bool> m_pelletActive;
+    std::vector<sf::CircleShape> m_stars;
+    sf::Clock m_animClock;
 };
