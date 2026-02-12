@@ -31,6 +31,18 @@ Nous avons choisi **Pacman** comme thème car il illustre parfaitement l’utili
 
 Ce choix nous permet de mettre en pratique **les concepts théoriques de FSM et LIA**.
 
+## Objectif du jeu
+
+-Le joueur contrôle un personnage qui se déplace dans un labyrinthe.
+
+Son But : 
+
+- Collecter tous les objets présents sur la map.
+- Éviter les ennemis (Fantomes).
+- Survivre jusqu’à ce que tous les collectibles soient récupérés.
+
+Si le joueur est attrapé par un ennemi → la partie se termine (Game Over).
+
 ## Contrôles du Player
 
 | Touche | Action | 
@@ -130,9 +142,17 @@ Chaque fantôme possède un comportement spécifique implémenté via une FSM, c
 - Identifie la case située **2 cases devant Pac-Man**  
 - Trace un vecteur allant de la position du **RedGhost** jusqu’à cette case  
 - Double ensuite la longueur de ce vecteur pour déterminer sa cible finale  
-- Occupe le **coin Bas-Droite** de la carte  
+- Occupe le **coin Bas-Droite** de la carte
 
+##  Améliorations envisagées
 
+Plusieurs améliorations auraient pu être ajoutées :
+ 
+- Création de plusieurs niveaux avec difficulté progressive.
+- Ajout d’un système de score.
+- Ajout de sons et musiques.
+
+---
 
 ### Compatibilité
 
